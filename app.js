@@ -1,5 +1,4 @@
 const express = require('express');
-const cors = require('cors');
 const bodyParser = require('body-parser');
 const path = require('path');
 const multer = require('multer');
@@ -11,36 +10,16 @@ const MongoStore = require('connect-mongo');
 const bcrypt = require('bcrypt');
 const cloudinary = require('cloudinary').v2;
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
-const rateLimit = require('express-rate-limit');
-const helmet = require('helmet');
-const mongoSanitize = require('express-mongo-sanitize');
-
 const app = express();
 
-// Import the database models
+// Import the database.js file
 const { User, Food, House, Market } = require('./database'); // Adjust path as needed
 
 // Middleware to parse JSON and form data
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, 'public'))); // Serve static files from 'public' directory
-
-// Use CORS for cross-origin requests
-app.use(cors());
-
-// Prevent NoSQL injection with express-mongo-sanitize
-app.use(mongoSanitize());
-
-// Set secure HTTP headers with Helmet
-app.use(helmet());
-
-// Set up rate limiting
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100 // limit each IP to 100 requests per window
-});
-app.use(limiter);
-
+app.use(express.static('public')); // Serve static files from 'public' directory
+app.use(express.urlencoded({ extended: true })); // For parsing application/x-www-form-urlencoded
 
 // Session setup
 app.use(

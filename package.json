@@ -8,9 +8,7 @@
     "start": "node app.js",
     "lint": "eslint .",
     "lint:ejs": "npx ejs-lint views/**/*.ejs",
-    "format": "prettier --write .",
-    "build": "webpack",
-    "serve": "webpack serve --open"
+    "format": "prettier --write ."   
   },
   "author": "",
   "license": "ISC",
